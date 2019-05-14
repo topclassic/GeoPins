@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useContext } from "react";
 import { withStyles } from "@material-ui/core/styles";
-// import ExitToApp from "@material-ui/icons/ExitToApp";
-// import Typography from "@material-ui/core/Typography";
+import { GoogleLogout } from "react-google-login";
+import ExitToApp from "@material-ui/icons/ExitToApp";
+import Typography from "@material-ui/core/Typography";
+import Context from "../../Context";
 
 const Signout = ({ classes }) => {
-  return <div>Signout</div>;
+  const { dispatch } = useContext(Context);
+  const onSingOut = () => {
+    dispatch({ type: "SIGNOUT_USER" });
+    console.log("SIGNOUT_USER");
+  };
+  return (
+    <GoogleLogout
+      onLogoutSuccess={onSingOut}
+      buttonText="Signout"
+      render={({ onClick }) => (
+        <span className={classes.root} onClick={onClick}>
+          <Typography>Sing Out</Typography>
+          <ExitToApp className={classes.buttonIcon} />
+        </span>
+      )}
+    />
+  );
 };
 
 const styles = {
